@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>H&M</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+
+/* reset */
+html,body { height:100%; }
+body,div,p,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,form,fieldset,button,input { margin:0; padding:0; }
+h1,h2,h3,h4 { font-size:12px; }
+ul,li,ol { list-style:none; }
+img,fieldset,iframe { border:0; }
+img { vertical-align:top; }
+table { border-collapse:collapse; }
+
+/* base */
+body {
+	font-family:'Noto Sans KR';
+	font-size:16px; 
+	font-weight:300;
+	color:#333;
+}
+
+a { transition:0.5s; color:#333; text-decoration:none; }
+a:hover { color:yellow; } 
+
+.blind { position:absolute; top:-9999px; }
+
+.skip_navigation a { 
+	position:absolute; left:0px; top:-9999px; z-index:1001;
+	color:white; background:black; padding:5px;
+}
+.skip_navigation a:focus { top:0; }
+
+
+
+
+/* layout */
+#header { 
+	/* height:100px; */ 
+	position:fixed; left:0px; top:0px;
+	width:100%; z-index:1000;
+	background-color:rgba(0,0,0,0.33); 
+}
+#header .inner { position:relative; margin:0 auto; width:1280px; height:100px; border:5px dashed orange; }
+
+#visual { background-color:hotpink; }
+
+#container { border:5px dashed black; }
+
+#container #trend { /* background-color:yellowgreen; */ }
+#container #trend .inner { 
+	margin:0 auto; width:1280px; 
+	padding-top:118px; padding-bottom:146px;
+	border:5px dashed blue; 
+}
+
+#container #magazine { background-color:#f4eddd; }
+#container #magazine .inner { 
+	margin:0 auto; width:1280px; 
+	padding-top:118px; padding-bottom:146px;
+	border:5px dashed skyblue; 
+}
+
+#footer { background-color:#222; color:white; }
+#footer .inner { margin:0 auto; width:1280px; border:5px dashed white; }
+
+/* header */
+h1 { position:absolute; left:0px; top:17px; width:101px; height:67px; /* background:red; */ }
+
+.gnb { 
+	position:absolute; left:309px; top:45px; 
+	width:772px /* 193 x 4(main개수) */; 
+	border:3px dashed blue; 
+}
+
+.gnb > ul { /*  >는 자식선택자(아들딸뻘자식은 해당, 손자이하는 해당안됨)  */
+	display:flex; 
+	/* justify-content:space-between; */
+			/*
+				flex-start/flex-end/center
+				space-between 간격을 일정
+			*/
+}
+.gnb ul li { /* border:1px dashed blue; */ 
+	font-weight:400 /*relular*/;
+
+	line-height:1em; 
+		/* 줄간격 
+			1em=100% --> 폰트사이즈와 같아짐 :줄간격 초기화
+			2em=200% --> 폰트사이즈의 2배
+			3em=300% --> 폰트사이즈의 3배
+		*/
+}
+.gnb ul li a { color:#fff; }
+.gnb ul li a:hover { color:yellow; }
+
+
+.gnb .main { 
+	width:193px;
+	border:3px solid yellow;
+}
+
+.gnb .sub { transition:0.5s;
+	/* display:none; */
+	overflow:hidden;
+	
+	height:0px;
+
+	border:3px solid hotpink;
+}
+.gnb .sub li:first-child { padding-top:133px; }
+
+.gnb .sub li { 
+	height:30px; 
+	border:5px dashed skyblue;
+}
+.gnb .sub li a { font-weight:300; font-size:14px; }
+
+/* .gnb:hover .sub { height:453px; } */
+/* .gnb에 오버했을때 그안의 .sub를 보여라 */
+
+/* .gnb:hover .gnb_bg { height:453px; } */
+/* .gnb에 오버했을때 그안의 .gnb_bg(검정박스)를 보여라 */
+
+
+.gnb_bg { transition:0.5s;
+	position:absolute; left:-629px; top:55px;	
+	 z-index:-100; 
+	width:1920px;
+
+	height:0px; /* 0px면 검정박스 안보이고, 453px면 보임 */
+
+	background-color:rgba(0,0,0,0.77);
+}
+
+
+
+
+
+
+.util { 
+	display:flex;
+	justify-content:space-between;
+	position:absolute; right:0px; top:44px; 
+	width:175px; height:21px; 
+	/* background:pink; */ 
+}
+.util li { /* border:1px solid skyblue; */ }
+
+.util #t1 {
+	border:0;
+	border-bottom:2px solid #c7c7c7;
+	background:none;
+	width:113px; height:19px;
+	outline:none;
+	color:white;
+}
+.util input { float:left; /* 폼요소간의 수직어긋남을 맞춤 */ }
+
+.util .icon { opacity:0.7; }
+.util .icon:hover { opacity:1; }
+
+
+/* visual */
+#visual img { width:100%; }
+
+
+/* container > trend */
+#trend h2 { 
+	padding-bottom:34px;
+	text-align:center;
+	font-size:18px;
+	line-height:1em; /* 줄간격 초기화 100%=1em */
+	letter-spacing:4px; /* 자간(글자사이 간격)*/
+	border:2px solid red; 
+}
+
+#trend ul { 
+	display:flex; /* 자식들이 가로배열됨 */
+	justify-content:space-between;
+		/* flex-start,flex-end,center (축정렬)
+			space-between (일정한 간격)
+			space-evenly (일정한 간격 - 양끝도 간격있음)
+			space-around (일정한 간격 - 양끝간격 반 작음)
+		*/
+
+	border:2px dashed orange; 
+}
+#trend ul li { position:relative; text-align:center; border:1px solid blue; }
+
+#trend ul li .box {
+	transition:0.5s;
+	opacity:0;
+	position:absolute; left:0px; top:0px;
+	width:250px; height:250px; 
+	color:white; background:red;
+
+	display:flex; justify-content:center; align-items:center;
+}
+#trend ul li:hover .box { opacity:1; }
+
+
+
+
+
+/* container > magazine */
+#magazine h2 { 
+	padding-bottom:34px;
+	text-align:center;
+	font-size:18px;
+	line-height:1em; /* 줄간격 초기화 100%=1em=글자사이즈와 같음)  */
+	letter-spacing:4px; /* 자간(글자사이 간격)*/
+	border:2px solid red; 
+}
+#magazine h2 span {
+	font-size:11px; 
+	letter-spacing:0px;
+	font-weight:400;
+
+	display:block; 
+	/* 인라인요소에는 width,height,padding-top/bottom 적용안기때문에
+	적용시키려면 
+	display:inline-block (줄바꿈 없음)
+	또는 
+	display:block (줄바꿈 있음)
+	을 설정 */
+	padding-top:14px;
+}
+
+#magazine ul {
+	display:flex; /*자식들을 가로배열*/
+	justify-content:space-between; /* 간격 일정 */
+}
+#magazine ul li { 
+	width:380px; height:634px; 
+	background:white;
+	text-align:center;
+	/* border:3px dashed blue; */ 
+}
+#magazine ul li h3 { 
+	padding-top:35px;
+	padding-bottom:33px;
+	font-size:14px; 
+	line-height:1em; /* 1em=100% :줄간격이 글자사이즈와 같아짐 - 줄간격 초기화 */
+	border:2px dashed #0cc; 
+}
+#magazine ul li p { 
+	padding-left:70px;
+	padding-right:70px;
+	border:2px dashed hotpink; 
+}
+
+#container a:hover { color:#333; opacity:0.8; }
+
+
+/* footer */
+.sitemap { 
+	display:flex; 
+	padding-top:83px;
+	padding-bottom:110px;
+	border:2px dashed red; 
+}
+.sitemap a { color:white; }
+.sitemap a:hover { color:yellow; }
+
+.sitemap div { border:2px dashed yellow; }
+.sm1 { flex:20; }
+.sm2 { flex:20; }
+.sm3 { flex:20; }
+.sm4 { flex:15; }
+
+.sitemap div h3 { 
+	font-size:16px; 
+	font-weight:400; 
+	line-height:1em;
+	height:38px;
+	border:2px dashed orange;
+}
+.sitemap div ul li {
+	font-size:14px;
+	line-height:1em;
+	height:30px;
+	border:1px dashed #555;
+}
+.sitemap div.sm4 p {
+	font-size:14px; padding-bottom:42px;
+}
+
+.info ul {
+	display:flex;
+	justify-content:center;
+
+	padding-bottom:20px;
+	border:5px solid skyblue;
+}
+.info li {
+	width:90px;
+	text-align:center;
+	border:2px dashed yellow;
+}
+
+.info p {
+	text-align:center;
+	font-size:12px;
+	color:#b4b4b4;
+	line-height:14px;
+	font-weight:500;
+}
+
+.info div { text-align:center; padding-top:22px; padding-bottom:90px; }
+</style>
+</head>
+<body>
+
+<div class="skip_navigation">
+	<a href="#container">본문 바로가기</a>
+	<a href="#footer">하단 바로가기</a>
+</div>
+
+
+<header id="header">
+	<div class="inner">
+
+		<h1><a href="#"><img src="images/logo.png" alt="H&M"></a></h1>
+
+		<h2 class="blind">주요메뉴</h2>
+
+
+		<nav class="gnb">
+			<ul>
+				<li class="main">
+					<a href="#">여성</a>
+					<ul class="sub">
+						<li><a href="#">서브메뉴1</a></li>
+						<li><a href="#">서브메뉴2</a></li>
+						<li><a href="#">서브메뉴3</a></li>
+					</ul>
+				</li>
+
+				<li class="main">
+					<a href="#">남성</a>
+					<ul class="sub">
+						<li><a href="#">서브메뉴1</a></li>
+						<li><a href="#">서브메뉴2</a></li>
+						<li><a href="#">서브메뉴3</a></li>
+					</ul>
+				</li>
+
+				<li class="main">
+					<a href="#">아동</a>
+					<ul class="sub">
+						<li><a href="#">서브메뉴1</a></li>
+						<li><a href="#">서브메뉴2</a></li>
+						<li><a href="#">서브메뉴3</a></li>
+					</ul>
+				</li>
+
+				<li class="main">
+					<a href="#">Sale</a>
+					<ul class="sub">
+						<li><a href="#">서브메뉴1</a></li>
+						<li><a href="#">서브메뉴2</a></li>
+						<li><a href="#">서브메뉴3</a></li>
+					</ul>
+				</li>
+
+			</ul>
+
+			<div class="gnb_bg"></div><!-- 검정박스 -->		
+		</nav>
+
+
+
+
+		<ul class="util">
+			<li>
+				<form action="#">
+					<fieldset>
+						<legend class="blind">통합검색</legend>
+
+						<label for="t1" class="blind">검색어 입력</label>
+						<input type="text" id="t1">
+
+						<input type="image" src="images/search.svg" alt="검색" class="icon">
+					</fieldset>
+				</form>
+			</li>
+
+			<li><a href="#"><img src="images/favorite.svg" width="19" alt="찜" class="icon"></a></li>
+		</ul>
+
+	</div>
+</header>
+
+
+
+<div id="visual">
+	<img src="images/visual.jpg" alt="Feeling as fresh as a daisy - 봄에 입고싶은 옷을 만나보세요">
+</div>
+
+
+
+<div id="container">
+	<section id="trend">
+		<div class="inner">
+			<h2>TREND</h2>
+			<ul>
+				<!-- 인라인요소 안에 블록요소 넣을 수 없다 
+					(단, a태그는 인라인요소이지만 예외)
+				-->
+				<li>
+					<a href="#">						
+						<img src="images/tr1.jpg" alt="제품1">
+						<p>스웨터</p>
+						<p class="box b1">설명상자</p>
+					</a>					
+				</li>
+
+				<li>
+					<a href="#">
+						<img src="images/tr2.jpg" alt="제품2">
+						<p>가디건</p>
+						<p class="box b2">설명상자</p>
+					</a>					
+				</li>
+
+				<li>
+					<a href="#">
+						<img src="images/tr3.jpg" alt="제품3">
+						<p>아동의류</p>
+						<p class="box b3">설명상자</p>
+					</a>					
+				</li>
+
+				<li>
+					<a href="#">
+						<img src="images/tr4.jpg" alt="제품4">
+						<p>신상품</p>
+						<p class="box b4">설명상자</p>
+					</a>					
+				</li>
+
+
+			</ul>
+		</div>
+	</section>
+
+	<section id="magazine">
+		<div class="inner">
+			<h2>
+				MAGAZINE 
+				<span>A WORLD OF INSPIRATION</span>
+			</h2>
+
+			<ul>
+				<li>
+					<a href="#">
+						<img src="images/ma1.jpg" alt="inside h&m">
+						<h3>INSIDE H&amp;M</h3>
+						<p>인도네시아 섬의 플라스틱 폐기물을 데일 패션으로 바꾸고 있습니다</p>
+					</a>
+				</li>
+
+				<li>
+					<a href="#">
+						<img src="images/ma2.jpg" alt="inside h&m">
+						<h3>INSIDE H&amp;M</h3>
+						<p>나만의 스타일을 나누세요</p>
+					</a>
+				</li>
+
+				<li>
+					<a href="#">
+						<img src="images/ma3.jpg" alt="inside h&m">
+						<h3>INSIDE H&amp;M</h3>
+						<p>H&amp;M 베스트 스타일링 방법</p>
+					</a>
+				</li>
+
+
+			</ul>
+		</div>
+	</section>
+</div>
+
+
+<footer id="footer">
+	<div class="inner">
+		<div class="sitemap">
+			<h2 class="blind">사이트맵</h2>
+
+			<div class="sm1">
+				<h3>카테고리</h3>
+				<ul>
+					<li><a href="#">여성</a></li>
+					<li><a href="#">남성</a></li>
+					<li><a href="#">신생아/유아</a></li>
+					<li><a href="#">아동</a></li>
+					<li><a href="#">H&amp;M HOME</a></li>
+					<li><a href="#">Sale</a></li>
+				</ul>
+			</div>
+
+			<div class="sm2">
+				<h3>카테고리</h3>
+				<ul>
+					<li><a href="#">여성</a></li>
+					<li><a href="#">남성</a></li>
+					<li><a href="#">신생아/유아</a></li>
+					<li><a href="#">아동</a></li>
+					<li><a href="#">H&amp;M HOME</a></li>
+					<li><a href="#">Sale</a></li>
+				</ul>
+			</div>
+
+			<div class="sm3">
+				<h3>카테고리</h3>
+				<ul>
+					<li><a href="#">여성</a></li>
+					<li><a href="#">남성</a></li>
+					<li><a href="#">신생아/유아</a></li>
+					<li><a href="#">아동</a></li>
+					<li><a href="#">H&amp;M HOME</a></li>
+					<li><a href="#">Sale</a></li>
+				</ul>
+			</div>
+
+			<div class="sm4">
+				<h3>지금 멤버십에 가입하세요!</h3>
+				<p>지금 가입하시고 10% 할인받으세요</p>				
+
+				<ul>
+					<li><a href="#">지금 가입하기</a></li>
+				</ul>
+			</div>
+
+		</div>
+
+		<div class="info">
+			<h2 class="blind">회사 기타 정보</h2>
+			
+			<ul>
+				<li><a href="#"><img src="images/sns1.gif" alt="페이스북"></a></li>
+				<li><a href="#"><img src="images/sns2.gif" alt="트위터"></a></li>
+				<li><a href="#"><img src="images/sns3.gif" alt="인스타그램"></a></li>
+				<li><a href="#"><img src="images/sns4.gif" alt="유튜브"></a></li>
+				<li><a href="#"><img src="images/sns5.gif" alt="핀테레스트"></a></li>
+			</ul>
+
+			<p>The content of this site is copyright-protected and is the property of H&M Hennes & Mauritz AB. H&M's business<br>
+			 concept is to offer fashion and quality at the best price in a sustainable way. H&M has since it was founded in<br>
+			 1947 grown into one of the world's leading fashion companies.</p>
+
+			<div><img src="images/f_logo.gif" alt="H&M"></div>
+		</div>
+
+	</div>
+</footer>
+
+
+
+<script>
+/* 초기설정 */
+const gnb = document.querySelector(".gnb");
+const gnb_bg = document.querySelector(".gnb_bg");//검정박스
+const sub = document.querySelectorAll(".sub");
+
+
+/* 메뉴설정 */
+gnb.addEventListener("mouseenter",menuOn); //오버(enter)
+gnb.addEventListener("focusin",menuOn); //gnb영역안의 요소중 포커스가 되었을때
+function menuOn(){
+	sub.forEach(function(sb){ sb.style.height="453px" });//서브전체 보이기
+	gnb_bg.style.height="453px";//검정박스 보이기
+}
+
+
+gnb.addEventListener("mouseleave",menuOff); //아웃(leave)
+gnb.addEventListener("focusout",menuOff); //gnb영역안의 요소중 포커스가 없을때
+function menuOff(){
+	sub.forEach(function(sb){ sb.style.height="0px" });//서브전체 안보이기
+	gnb_bg.style.height="0px";//검정박스 안보이기
+}
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
